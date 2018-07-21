@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>430761759501-rumob44gr80lfph3bk0rj4aknai3dh3f.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.430761759501-rumob44gr80lfph3bk0rj4aknai3dh3f</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBZ26FYvNbv5oZFw85PaSAQmZvSQz2ZdJI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>430761759501</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>ru.carpetstory.CarpetStory</string>
+	<key>PROJECT_ID</key>
+	<string>carpetstory-e5a8f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>carpetstory-e5a8f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:430761759501:ios:bb7d7b08b5fb1fda</string>
+	<key>DATABASE_URL</key>
+	<string>https://carpetstory-e5a8f.firebaseio.com</string>
+</dict>
+</plist>
