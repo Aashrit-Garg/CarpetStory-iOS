@@ -15,8 +15,10 @@
 		04566163210355A800D0FBF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04566161210355A800D0FBF8 /* LaunchScreen.storyboard */; };
 		0456616E21035C0100D0FBF8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0456616D21035C0100D0FBF8 /* GoogleService-Info.plist */; };
 		0456617021035E9D00D0FBF8 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456616F21035E9D00D0FBF8 /* WelcomeViewController.swift */; };
-		0456617221036A0800D0FBF8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456617121036A0800D0FBF8 /* LoginViewController.swift */; };
-		0456617421036A1F00D0FBF8 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456617321036A1F00D0FBF8 /* RegisterViewController.swift */; };
+		0456617621044F1000D0FBF8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456617521044F1000D0FBF8 /* HomeViewController.swift */; };
+		04E0EAD62109713A002962FD /* Carpet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0EAD52109713A002962FD /* Carpet.swift */; };
+		04E0EAD8210977BC002962FD /* AddCarpetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0EAD7210977BC002962FD /* AddCarpetViewController.swift */; };
+		04E0EADA210AE814002962FD /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0EAD9210AE814002962FD /* MainTabBarController.swift */; };
 		7224D04A99D3CF07A3A72592 /* Pods_CarpetStory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BE5F0F128E7F0B1BCFB745 /* Pods_CarpetStory.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,8 +33,12 @@
 		04566164210355A800D0FBF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0456616D21035C0100D0FBF8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0456616F21035E9D00D0FBF8 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
-		0456617121036A0800D0FBF8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		0456617321036A1F00D0FBF8 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		0456617521044F1000D0FBF8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		04B38EF3210C58C3003C4F71 /* categories_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = categories_icon.png; sourceTree = "<group>"; };
+		04E0EAD52109713A002962FD /* Carpet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carpet.swift; sourceTree = "<group>"; };
+		04E0EAD7210977BC002962FD /* AddCarpetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCarpetViewController.swift; sourceTree = "<group>"; };
+		04E0EAD9210AE814002962FD /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		04E0EADB210AF634002962FD /* CarpetStory.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarpetStory.entitlements; sourceTree = "<group>"; };
 		05BE5F0F128E7F0B1BCFB745 /* Pods_CarpetStory.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CarpetStory.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2E7C0C47F276AF26311DB4E /* Pods-CarpetStory.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarpetStory.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CarpetStory/Pods-CarpetStory.debug.xcconfig"; sourceTree = "<group>"; };
 		BF193B3C591DB8D29EE99A0B /* Pods-CarpetStory.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarpetStory.release.xcconfig"; path = "Pods/Target Support Files/Pods-CarpetStory/Pods-CarpetStory.release.xcconfig"; sourceTree = "<group>"; };
@@ -71,12 +77,15 @@
 		04566155210355A300D0FBF8 /* CarpetStory */ = {
 			isa = PBXGroup;
 			children = (
+				04E0EADB210AF634002962FD /* CarpetStory.entitlements */,
 				04566156210355A300D0FBF8 /* AppDelegate.swift */,
 				0456616C2103560C00D0FBF8 /* Model */,
 				0456616B210355F100D0FBF8 /* Controller */,
 				0456616A210355DC00D0FBF8 /* View */,
+				0456617721046DA800D0FBF8 /* Misc. */,
 				04566158210355A300D0FBF8 /* art.scnassets */,
 				0456615F210355A800D0FBF8 /* Assets.xcassets */,
+				04B38EF3210C58C3003C4F71 /* categories_icon.png */,
 				04566164210355A800D0FBF8 /* Info.plist */,
 				0456616D21035C0100D0FBF8 /* GoogleService-Info.plist */,
 			);
@@ -97,8 +106,9 @@
 			children = (
 				0456615A210355A300D0FBF8 /* ARViewController.swift */,
 				0456616F21035E9D00D0FBF8 /* WelcomeViewController.swift */,
-				0456617121036A0800D0FBF8 /* LoginViewController.swift */,
-				0456617321036A1F00D0FBF8 /* RegisterViewController.swift */,
+				0456617521044F1000D0FBF8 /* HomeViewController.swift */,
+				04E0EAD7210977BC002962FD /* AddCarpetViewController.swift */,
+				04E0EAD9210AE814002962FD /* MainTabBarController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -106,8 +116,16 @@
 		0456616C2103560C00D0FBF8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				04E0EAD52109713A002962FD /* Carpet.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		0456617721046DA800D0FBF8 /* Misc. */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Misc.;
 			sourceTree = "<group>";
 		};
 		295BA251D22EEEDF5DB34CD2 /* Pods */ = {
@@ -139,6 +157,7 @@
 				04566150210355A300D0FBF8 /* Frameworks */,
 				04566151210355A300D0FBF8 /* Resources */,
 				8973A9C3E4153188ABB73AC9 /* [CP] Embed Pods Frameworks */,
+				122BC66E19907EB03AE49F30 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -161,6 +180,11 @@
 				TargetAttributes = {
 					04566152210355A300D0FBF8 = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -198,6 +222,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		122BC66E19907EB03AE49F30 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CarpetStory/Pods-CarpetStory-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CarpetStory/Pods-CarpetStory-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		73A75A04109F170D627FC8C4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -225,6 +267,10 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-CarpetStory/Pods-CarpetStory-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
@@ -235,6 +281,10 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
@@ -253,11 +303,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0456617221036A0800D0FBF8 /* LoginViewController.swift in Sources */,
-				0456617421036A1F00D0FBF8 /* RegisterViewController.swift in Sources */,
+				04E0EADA210AE814002962FD /* MainTabBarController.swift in Sources */,
+				04E0EAD62109713A002962FD /* Carpet.swift in Sources */,
 				0456617021035E9D00D0FBF8 /* WelcomeViewController.swift in Sources */,
 				0456615B210355A300D0FBF8 /* ARViewController.swift in Sources */,
 				04566157210355A300D0FBF8 /* AppDelegate.swift in Sources */,
+				0456617621044F1000D0FBF8 /* HomeViewController.swift in Sources */,
+				04E0EAD8210977BC002962FD /* AddCarpetViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +454,7 @@
 			baseConfigurationReference = A2E7C0C47F276AF26311DB4E /* Pods-CarpetStory.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CarpetStory/CarpetStory.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QCQX6JYWAF;
 				INFOPLIST_FILE = CarpetStory/Info.plist;
@@ -421,6 +474,7 @@
 			baseConfigurationReference = BF193B3C591DB8D29EE99A0B /* Pods-CarpetStory.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CarpetStory/CarpetStory.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QCQX6JYWAF;
 				INFOPLIST_FILE = CarpetStory/Info.plist;

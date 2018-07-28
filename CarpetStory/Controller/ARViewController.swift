@@ -10,9 +10,11 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ARViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
+    var path : String?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,10 +58,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             if let hitResult = results.first {
                 
                 // Create a new scene
-                let carpetScene = SCNScene(named: "art.scnassets/PersianCarpet.scn")!
+
+                let carpetScene = try! SCNScene(url: URL(fileURLWithPath: path!), options: nil)
                 
                 if let carpetNode = carpetScene.rootNode.childNode(withName: "PersianCarpet", recursively: true) {
                     
+                    carpetNode.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "art.scnassets/PersianCarpet_Diffuce.jpg")
                     carpetNode.position = SCNVector3(
                         x: hitResult.worldTransform.columns.3.x,
                         y: hitResult.worldTransform.columns.3.y,
@@ -69,11 +73,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     sceneView.scene.rootNode.addChildNode(carpetNode)
                     
                 }
-                
             }
-            
         }
-        
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
@@ -98,7 +99,5 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             return
             
         }
-        
     }
-    
 }
