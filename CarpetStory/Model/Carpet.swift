@@ -2,8 +2,8 @@
 class Carpet {
     
     var name : String?
-    var length : Double?
-    var breadth : Double?
+    var length : Int?
+    var breadth : Int?
     var imageURL : String?
     var modelURL : String?
     var description : String?
@@ -11,8 +11,8 @@ class Carpet {
     
     init(
         name: String?,
-        breadth: Double?,
-        length: Double?,
+        breadth: Int?,
+        length: Int?,
         imageURL: String?,
         modelURL : String?,
         description: String?,

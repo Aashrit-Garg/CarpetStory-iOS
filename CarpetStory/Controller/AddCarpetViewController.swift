@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
 
 class AddCarpetViewController: UIViewController {
 
@@ -18,9 +20,11 @@ class AddCarpetViewController: UIViewController {
     @IBOutlet weak var modelTextField: UITextField!
     @IBOutlet weak var descriptionTextField: UITextView!
     
+    let db = Firestore.firestore()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
 
@@ -31,16 +35,33 @@ class AddCarpetViewController: UIViewController {
     
     @IBAction func addCarpetPressed(_ sender: UIButton) {
         
+        var ref: DocumentReference? = nil
+        
+        let data = [
+            "name": nameTextField.text ?? "",
+            "breadth": Int(breadthTextField.text!)!,
+            "length": Int(lengthTextField.text!)!,
+            "imageURL": imageTextField.text ?? "",
+            "modelURL": modelTextField.text ?? "",
+            "description": descriptionTextField.text ?? "",
+            "category": categoryTextField.text ?? ""
+            ] as [String : Any]
+        
+        ref = db.collection("Carpets").addDocument(data: data) { err in
+            if let err = err {
+                print("Error adding document: \(err)")
+            } else {
+                print("Document added with ID: \(ref!.documentID)")
+                
+                let firebaseAuth = Auth.auth()
+                do {
+                    try firebaseAuth.signOut()
+                    self.dismiss(animated: true, completion: nil)
+                    print("Successfully Logout")
+                } catch let signOutError as NSError {
+                    print ("Error signing out: %@", signOutError)
+                }
+            }
+        }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

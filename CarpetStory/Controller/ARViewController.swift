@@ -58,12 +58,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             if let hitResult = results.first {
                 
                 // Create a new scene
-
-                let carpetScene = try! SCNScene(url: URL(fileURLWithPath: path!), options: nil)
+                let carpetScene = SCNScene(named: "art.scnassets/PersianCarpet.scn")!
                 
                 if let carpetNode = carpetScene.rootNode.childNode(withName: "PersianCarpet", recursively: true) {
                     
-                    carpetNode.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "art.scnassets/PersianCarpet_Diffuce.jpg")
                     carpetNode.position = SCNVector3(
                         x: hitResult.worldTransform.columns.3.x,
                         y: hitResult.worldTransform.columns.3.y,
@@ -73,8 +71,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
                     sceneView.scene.rootNode.addChildNode(carpetNode)
                     
                 }
+                
             }
+            
         }
+        
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
@@ -99,5 +100,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             return
             
         }
+        
     }
+    
 }

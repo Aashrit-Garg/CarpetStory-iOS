@@ -8,33 +8,121 @@
 
 import UIKit
 import Firebase
+import Alamofire
+import AlamofireImage
+import SVProgressHUD
 
-class HomeViewController: UIViewController {
-
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var carpetTableView: UITableView!
+    
 //    var ls = NSHomeDirectory()
+    var carpets = [Carpet]()
+    let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
+        carpetTableView.delegate = self
+        carpetTableView.dataSource = self
+        carpetTableView.rowHeight = 243
+        
+//        getCarpetFromDoc(documentID: "9JVcuFS935iSaIkhwGh0")
+//        getCarpetFromDoc(documentID: "V3NGiWBaTtbwHZAr9BX7")
+        
+        db.collection("Carpets").addSnapshotListener { documentSnapshot, error in
+                guard let documents = documentSnapshot?.documents else {
+                    print("Error fetching document changes: \(error!)")
+                    return
+                }
+                let source = documents[0].metadata.hasPendingWrites ? "Local" : "Server"
+                for i in 0 ..< documents.count {
+                    let documentID = documents[i].documentID
+                    self.getCarpetFromDoc(documentID: documentID)
+                }
+        }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
-    @IBAction func pressedlogout(_ sender: UIButton) {
+    //MARK:- Get Document & Make Carpet Array
+    
+    func getCarpetFromDoc(documentID : String) {
+        
+        let docRef = db.collection("Carpets").document(documentID)
+        
+        SVProgressHUD.show()
+        docRef.getDocument { (document, error) in
+            
+            if let document = document, document.exists {
+                let dataDescription = document.data()
+                print("Document data: \(dataDescription)")
+                
+                let carpet1 : Carpet = Carpet(
+                    name: dataDescription!["name"] as? String ?? "",
+                    breadth: dataDescription!["breadth"] as? Int ?? 1,
+                    length: dataDescription!["length"] as? Int ?? 1,
+                    imageURL: dataDescription!["imageURL"] as? String ?? "",
+                    modelURL: dataDescription!["modelURL"] as? String ?? "",
+                    description: dataDescription!["description"] as? String ?? "",
+                    category: dataDescription!["category"] as? String ?? "")
+                self.carpets.append(carpet1)
+                
+                self.carpetTableView.reloadData()
+                
+            } else {
+                print("Document does not exist")
+            }
+            
+            SVProgressHUD.dismiss()
+        }
+    }
+
+    //MARK:- Logout Method
+    
+    @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
             self.dismiss(animated: true, completion: nil)
-            print("Sucesssssss")
+            print("Successfully Loged Out")
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
         }
-        
     }
+    
+    //MARK:- TableView Delegate Methods
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return carpets.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "carpetCell", for: indexPath) as! CarpetTableViewCell
+        if carpets.count != 0 {
+            let carpet : Carpet = carpets[indexPath.row]
+            cell.carpetName.text = carpet.name
+            SVProgressHUD.show()
+            Alamofire.request(carpet.imageURL!).responseImage { response in
+                debugPrint(response)
+                
+                if let image = response.result.value {
+                    cell.carpetImage.image = image
+                    SVProgressHUD.dismiss()
+                }
+            }
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "goToAR", sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
     
 //    @IBAction func downloadPressed(_ sender: UIButton) {
 //

@@ -13,6 +13,8 @@ import FBSDKLoginKit
 
 class WelcomeViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDelegate {
     
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
     @IBOutlet weak var googleLoginView: GIDSignInButton!
     
@@ -21,7 +23,11 @@ class WelcomeViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginBu
         
         //Set self as delegate and initiate views
         GIDSignIn.sharedInstance().uiDelegate = self
-        googleLoginView.frame = CGRect(x: 13, y: 510, width: view.frame.width - 26, height: 70)
+        googleLoginView.frame = CGRect(x: 13, y: view.frame.height - 60, width: view.frame.width - 26, height: 50)
+        facebookLoginButton.frame = CGRect(x: 16, y: view.frame.height - 115 , width: view.frame.width - 32, height: 40)
+        
+        titleLabel.adjustsFontSizeToFitWidth = true
+        subTitleLabel.adjustsFontSizeToFitWidth = true
         
         //Check to see if any user is Signed In
         if Auth.auth().currentUser != nil {
@@ -34,7 +40,7 @@ class WelcomeViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginBu
             if var delegate = facebookLoginButton {
                 delegate.delegate = self
                 facebookLoginButton.readPermissions = ["email"]
-                facebookLoginButton.frame = CGRect(x: 16, y: 460, width: view.frame.width - 32, height: 40)
+                
             }
         }
     }
