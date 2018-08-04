@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0408E1F82116121200945FA3 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0408E1F72116121200945FA3 /* CategoryViewController.swift */; };
 		04566157210355A300D0FBF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04566156210355A300D0FBF8 /* AppDelegate.swift */; };
 		04566159210355A300D0FBF8 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 04566158210355A300D0FBF8 /* art.scnassets */; };
 		0456615B210355A300D0FBF8 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456615A210355A300D0FBF8 /* ARViewController.swift */; };
@@ -18,7 +19,6 @@
 		0456617621044F1000D0FBF8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456617521044F1000D0FBF8 /* HomeViewController.swift */; };
 		04B38EF7211217C6003C4F71 /* OwnerLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B38EF6211217C6003C4F71 /* OwnerLoginViewController.swift */; };
 		04B38EFB2112FC7D003C4F71 /* CarpetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B38EFA2112FC7D003C4F71 /* CarpetTableViewCell.swift */; };
-		04B38EFD21158809003C4F71 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B38EFC21158809003C4F71 /* CategoryViewController.swift */; };
 		04B38F012115912A003C4F71 /* CarpetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B38F002115912A003C4F71 /* CarpetTableViewController.swift */; };
 		04B38F032115A41E003C4F71 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B38F022115A41E003C4F71 /* CategoryCollectionViewCell.swift */; };
 		04B38F052115DA29003C4F71 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B38F042115DA29003C4F71 /* SearchViewController.swift */; };
@@ -29,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0408E1F72116121200945FA3 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		04566153210355A300D0FBF8 /* CarpetStory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarpetStory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04566156210355A300D0FBF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04566158210355A300D0FBF8 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -43,7 +44,6 @@
 		04B38EF3210C58C3003C4F71 /* categories_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = categories_icon.png; sourceTree = "<group>"; };
 		04B38EF6211217C6003C4F71 /* OwnerLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerLoginViewController.swift; sourceTree = "<group>"; };
 		04B38EFA2112FC7D003C4F71 /* CarpetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarpetTableViewCell.swift; sourceTree = "<group>"; };
-		04B38EFC21158809003C4F71 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		04B38F002115912A003C4F71 /* CarpetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarpetTableViewController.swift; sourceTree = "<group>"; };
 		04B38F022115A41E003C4F71 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		04B38F042115DA29003C4F71 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -122,9 +122,9 @@
 				04E0EAD7210977BC002962FD /* AddCarpetViewController.swift */,
 				04E0EAD9210AE814002962FD /* MainTabBarController.swift */,
 				04B38EF6211217C6003C4F71 /* OwnerLoginViewController.swift */,
-				04B38EFC21158809003C4F71 /* CategoryViewController.swift */,
 				04B38F002115912A003C4F71 /* CarpetTableViewController.swift */,
 				04B38F042115DA29003C4F71 /* SearchViewController.swift */,
+				0408E1F72116121200945FA3 /* CategoryViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -333,7 +333,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04B38EFD21158809003C4F71 /* CategoryViewController.swift in Sources */,
 				04E0EADA210AE814002962FD /* MainTabBarController.swift in Sources */,
 				04E0EAD62109713A002962FD /* Carpet.swift in Sources */,
 				0456617021035E9D00D0FBF8 /* WelcomeViewController.swift in Sources */,
@@ -344,6 +343,7 @@
 				04B38F052115DA29003C4F71 /* SearchViewController.swift in Sources */,
 				04566157210355A300D0FBF8 /* AppDelegate.swift in Sources */,
 				0456617621044F1000D0FBF8 /* HomeViewController.swift in Sources */,
+				0408E1F82116121200945FA3 /* CategoryViewController.swift in Sources */,
 				04E0EAD8210977BC002962FD /* AddCarpetViewController.swift in Sources */,
 				04B38EFB2112FC7D003C4F71 /* CarpetTableViewCell.swift in Sources */,
 			);
