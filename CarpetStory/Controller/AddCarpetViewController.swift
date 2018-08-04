@@ -44,7 +44,8 @@ class AddCarpetViewController: UIViewController {
             "imageURL": imageTextField.text ?? "",
             "modelURL": modelTextField.text ?? "",
             "description": descriptionTextField.text ?? "",
-            "category": categoryTextField.text ?? ""
+            "category": categoryTextField.text ?? "",
+            "mostViewed": true
             ] as [String : Any]
         
         ref = db.collection("Carpets").addDocument(data: data) { err in

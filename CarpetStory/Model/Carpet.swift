@@ -8,6 +8,7 @@ class Carpet {
     var modelURL : String?
     var description : String?
     var category : String?
+    var mostViewed : Bool?
     
     init(
         name: String?,
@@ -16,7 +17,8 @@ class Carpet {
         imageURL: String?,
         modelURL : String?,
         description: String?,
-        category: String?
+        category: String?,
+        mostViewed: Bool?
         )
     {
         self.name = name
@@ -26,6 +28,7 @@ class Carpet {
         self.modelURL = modelURL
         self.description = description
         self.category = category
+        self.mostViewed = mostViewed
     }
 }
 

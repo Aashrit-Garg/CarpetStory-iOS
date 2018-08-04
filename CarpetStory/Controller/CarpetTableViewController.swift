@@ -1,42 +1,57 @@
 //
-//  HomeViewController.swift
+//  CarpetTableViewController.swift
 //  CarpetStory
 //
-//  Created by Aashrit Garg on 22/07/2018.
+//  Created by Aashrit Garg on 04/08/2018.
 //  Copyright © 2018 Aashrit Garg. All rights reserved.
 //
 
+import UIKit
 import UIKit
 import Firebase
 import Alamofire
 import AlamofireImage
 import SVProgressHUD
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
     @IBOutlet weak var carpetTableView: UITableView!
     
-//    var ls = NSHomeDirectory()
     var carpets = [Carpet]()
     let db = Firestore.firestore()
+    var query : Query!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         carpetTableView.delegate = self
         carpetTableView.dataSource = self
         carpetTableView.rowHeight = 243
         
-        db.collection("Carpets").whereField("mostViewed", isEqualTo: true).addSnapshotListener { documentSnapshot, error in
-                guard let documents = documentSnapshot?.documents else {
-                    print("Error fetching document changes: \(error!)")
-                    return
-                }
+        query.addSnapshotListener { documentSnapshot, error in
+            guard let documents = documentSnapshot?.documents else {
+                print("Error fetching document changes: \(error!)")
+                return
+            }
+            
+            if documents.count != 0 {
+                
                 for i in 0 ..< documents.count {
                     let documentID = documents[i].documentID
                     self.getCarpetFromDoc(documentID: documentID)
                 }
-           }
+                
+            } else {
+                
+                let alert = UIAlertController(title: "No carpets!", message: "Coudn't find carpets for mentioned size.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Go Back", style: .default) { (action) in
+                    _ = self.navigationController?.popViewController(animated: true)
+                }
+                
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     //MARK:- Get Document & Make Carpet Array
@@ -50,7 +65,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             if let document = document, document.exists {
                 let dataDescription = document.data()
-                print("Document data: \(dataDescription)")
                 
                 let carpet1 : Carpet = Carpet(
                     name: dataDescription!["name"] as? String ?? "",
@@ -70,19 +84,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             
             SVProgressHUD.dismiss()
-        }
-    }
-
-    //MARK:- Logout Method
-    
-    @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-            self.dismiss(animated: true, completion: nil)
-            print("Successfully Loged Out")
-        } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
         }
     }
     
@@ -112,41 +113,4 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.performSegue(withIdentifier: "goToAR", sender: self)
-//        tableView.deselectRow(at: indexPath, animated: true)
-//    }
-
-    
-//    @IBAction func downloadPressed(_ sender: UIButton) {
-//
-//        let urlString = "http://download1512.mediafire.com/4d8mkmam41dg/l59ktmvxl6kuuug/PersianCarpet.scn"
-//        let url = URL.init(string: urlString)
-//        let request = URLRequest(url: url!)
-//        let session = URLSession.shared
-//        let downloadTask = session.downloadTask(with: request, completionHandler: { (location:URL?, response:URLResponse?, error:Error?)
-//            -> Void in
-//            print("location:\(String(describing: location))")
-//            let locationPath = location!.path
-//            let documents:String = NSHomeDirectory() + "/Documents/carpet.scn"
-//            self.ls = NSHomeDirectory() + "/Documents"
-//            let fileManager = FileManager.default
-//            if (fileManager.fileExists(atPath: documents)){
-//                try! fileManager.removeItem(atPath: documents)
-//            }
-//            try! fileManager.moveItem(atPath: locationPath, toPath: documents)
-//            print("new location:\(documents)")
-//        })
-//        downloadTask.resume()
-//
-//        performSegue(withIdentifier: "goToAR", sender: self)
-//
-//
-//    }
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//
-//        let destinationVC = segue.destination as! ARViewController
-//        destinationVC.path = ls
-//    }
 }
