@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
-class CategoryViewController: UIViewController {
+class CategoryViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    var categories = ["Modern", "Classical", "Heritage", "Shallymar"]
+    var condition : String?
+    let db = Firestore.firestore()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,15 +26,25 @@ class CategoryViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return categories.count
     }
-    */
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! CategoryCollectionViewCell
+        cell.categoryLabel.text = categories[indexPath.item]
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        condition = categories[indexPath.item]
+        performSegue(withIdentifier: "goToCarpetTable", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! CarpetTableViewController
+        
+        destinationVC.query = db.collection("Carpets").whereField("category", isEqualTo: condition)
+    }
 
 }
