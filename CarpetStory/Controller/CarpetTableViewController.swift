@@ -20,6 +20,7 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
     var carpets = [Carpet]()
     let db = Firestore.firestore()
     var query : Query!
+    var index : Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,5 +113,15 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        index = indexPath.row
+        performSegue(withIdentifier: "goToCarpetDetail", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! CarpetViewController
+        destinationVC.carpet = carpets[index!]
     }
 }

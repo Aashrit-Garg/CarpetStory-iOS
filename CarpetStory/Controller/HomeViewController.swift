@@ -19,6 +19,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //    var ls = NSHomeDirectory()
     var carpets = [Carpet]()
     let db = Firestore.firestore()
+    var index : Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +51,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             if let document = document, document.exists {
                 let dataDescription = document.data()
-                print("Document data: \(dataDescription)")
                 
                 let carpet1 : Carpet = Carpet(
                     name: dataDescription!["name"] as? String ?? "",
@@ -113,10 +113,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.performSegue(withIdentifier: "goToAR", sender: self)
-//        tableView.deselectRow(at: indexPath, animated: true)
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        index = indexPath.row
+        performSegue(withIdentifier: "goToCarpetDetail", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! CarpetViewController
+        destinationVC.carpet = carpets[index!]
+    }
 
     
 //    @IBAction func downloadPressed(_ sender: UIButton) {

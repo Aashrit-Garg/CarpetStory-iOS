@@ -44,7 +44,7 @@ class CategoryViewController: UIViewController, UICollectionViewDelegate, UIColl
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! CarpetTableViewController
         
-        destinationVC.query = db.collection("Carpets").whereField("category", isEqualTo: condition)
+        destinationVC.query = db.collection("Carpets").whereField("category", isEqualTo: condition!)
     }
 
 }
