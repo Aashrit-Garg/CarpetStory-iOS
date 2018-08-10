@@ -11,6 +11,7 @@ import Firebase
 import Alamofire
 import AlamofireImage
 import SVProgressHUD
+import FirebaseFirestore
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -20,9 +21,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var carpets = [Carpet]()
     let db = Firestore.firestore()
     var index : Int?
+    var docID : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SVProgressHUD.dismiss()
 
         carpetTableView.delegate = self
         carpetTableView.dataSource = self
@@ -37,7 +41,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     let documentID = documents[i].documentID
                     self.getCarpetFromDoc(documentID: documentID)
                 }
-           }
+        }
     }
     
     //MARK:- Get Document & Make Carpet Array
@@ -52,7 +56,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             if let document = document, document.exists {
                 let dataDescription = document.data()
                 
-                let carpet1 : Carpet = Carpet(
+                let carpet : Carpet = Carpet(
                     name: dataDescription!["name"] as? String ?? "",
                     breadth: dataDescription!["breadth"] as? Int ?? 1,
                     length: dataDescription!["length"] as? Int ?? 1,
@@ -61,7 +65,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     description: dataDescription!["description"] as? String ?? "",
                     category: dataDescription!["category"] as? String ?? "",
                     mostViewed: true)
-                self.carpets.append(carpet1)
+                self.carpets.append(carpet)
+                self.docID = documentID
                 
                 self.carpetTableView.reloadData()
                 
@@ -114,13 +119,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         index = indexPath.row
+        SVProgressHUD.dismiss()
         performSegue(withIdentifier: "goToCarpetDetail", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! CarpetViewController
         destinationVC.carpet = carpets[index!]
+        destinationVC.docID = docID!
     }
 
     

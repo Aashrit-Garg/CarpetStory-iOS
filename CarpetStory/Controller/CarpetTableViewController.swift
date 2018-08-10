@@ -8,7 +8,7 @@
 
 import UIKit
 import UIKit
-import Firebase
+import FirebaseFirestore
 import Alamofire
 import AlamofireImage
 import SVProgressHUD
@@ -21,9 +21,12 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
     let db = Firestore.firestore()
     var query : Query!
     var index : Int?
+    var docID : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SVProgressHUD.dismiss()
         
         carpetTableView.delegate = self
         carpetTableView.dataSource = self
@@ -67,7 +70,7 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
             if let document = document, document.exists {
                 let dataDescription = document.data()
                 
-                let carpet1 : Carpet = Carpet(
+                let carpet : Carpet = Carpet(
                     name: dataDescription!["name"] as? String ?? "",
                     breadth: dataDescription!["breadth"] as? Int ?? 1,
                     length: dataDescription!["length"] as? Int ?? 1,
@@ -76,7 +79,8 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
                     description: dataDescription!["description"] as? String ?? "",
                     category: dataDescription!["category"] as? String ?? "",
                     mostViewed: true)
-                self.carpets.append(carpet1)
+                self.carpets.append(carpet)
+                self.docID = documentID
                 
                 self.carpetTableView.reloadData()
                 
@@ -116,12 +120,18 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
         index = indexPath.row
+        SVProgressHUD.dismiss()
         performSegue(withIdentifier: "goToCarpetDetail", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! CarpetViewController
         destinationVC.carpet = carpets[index!]
+        destinationVC.docID = docID!
     }
+    
+    
 }

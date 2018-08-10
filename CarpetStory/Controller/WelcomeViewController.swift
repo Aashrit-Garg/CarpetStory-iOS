@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 import GoogleSignIn
 import FBSDKLoginKit
+import FirebaseAuth
+import SVProgressHUD
 
 class WelcomeViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDelegate {
     
@@ -20,6 +22,8 @@ class WelcomeViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginBu
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SVProgressHUD.dismiss()
         
         //Set self as delegate and initiate views
         GIDSignIn.sharedInstance().uiDelegate = self

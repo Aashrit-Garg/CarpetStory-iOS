@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseFirestore
+import SVProgressHUD
 
 class SearchViewController: UIViewController {
 
@@ -21,6 +22,8 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SVProgressHUD.dismiss()
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapViewTapped))
         tapView.addGestureRecognizer(tapGesture)

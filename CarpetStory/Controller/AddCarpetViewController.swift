@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseFirestore
+import FirebaseAuth
 
 class AddCarpetViewController: UIViewController {
 
@@ -20,12 +21,27 @@ class AddCarpetViewController: UIViewController {
     @IBOutlet weak var modelTextField: UITextField!
     @IBOutlet weak var descriptionTextField: UITextView!
     
+    @IBOutlet weak var tapView: UIView!
+    
     let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapViewTapped))
+        tapView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func tapViewTapped() {
+        
+        nameTextField.endEditing(true)
+        categoryTextField.endEditing(true)
+        lengthTextField.endEditing(true)
+        breadthTextField.endEditing(true)
+        imageTextField.endEditing(true)
+        modelTextField.endEditing(true)
+        descriptionTextField.endEditing(true)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,4 +81,16 @@ class AddCarpetViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func logoutPressed(_ sender: UIButton) {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            self.dismiss(animated: true, completion: nil)
+            print("Successfully Logout")
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+    }
+    
 }
