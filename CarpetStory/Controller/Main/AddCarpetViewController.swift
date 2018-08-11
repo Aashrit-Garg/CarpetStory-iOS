@@ -55,8 +55,8 @@ class AddCarpetViewController: UIViewController {
         
         let data = [
             "name": nameTextField.text ?? "",
-            "breadth": Int(breadthTextField.text!)!,
-            "length": Int(lengthTextField.text!)!,
+            "breadth": Int(breadthTextField.text!) ?? 0,
+            "length": Int(lengthTextField.text!) ?? 0,
             "imageURL": imageTextField.text ?? "",
             "modelURL": modelTextField.text ?? "",
             "description": descriptionTextField.text ?? "",

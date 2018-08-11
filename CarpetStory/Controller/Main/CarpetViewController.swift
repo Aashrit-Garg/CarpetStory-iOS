@@ -49,27 +49,25 @@ class CarpetViewController: UIViewController {
     
     @IBAction func addToFavourites(_ sender: UIBarButtonItem) {
         
-        let query = db.collection("Favourites").whereField("docID", isEqualTo: docID!).whereField("userID", isEqualTo: Auth.auth().currentUser!.uid)
+        SVProgressHUD.show()
         
-        query.addSnapshotListener { documentSnapshot, error in
-            guard let documents = documentSnapshot?.documents else {
-                print("Error fetching document changes: \(error!)")
-                return
-            }
-            print(documents.count)
-            if documents.count == 0 {
-                var ref: DocumentReference? = nil
-                let data = ["userID" : Auth.auth().currentUser?.uid, "docID" : self.docID!]
-                ref = self.db.collection("Favourites").document(self.docID!)
-                ref?.setData(data) { err in
-                    if let err = err {
-                        print("Error adding document: \(err)")
-                    } else {
-                        print("Document added with ID: \(ref!.documentID)")
-                    }
-                }
+        var ref: DocumentReference? = nil
+        let data = ["wanted" : true]
+        ref = self.db.collection("Carpets").document(self.docID!).collection("Favourites").document(Auth.auth().currentUser!.uid)
+        ref?.setData(data) { err in
+            if let err = err {
+                SVProgressHUD.dismiss()
+                print("Error adding document: \(err)")
             } else {
-                print("Item already exists in database.")
+                SVProgressHUD.dismiss()
+                let alert = UIAlertController(title: "Success!", message: "Carpet added to favourites.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Continue", style: .default) { (action) in
+                    
+                }
+                
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+                print("Document added with ID: \(ref!.documentID)")
             }
         }
     }

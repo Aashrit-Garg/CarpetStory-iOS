@@ -11,6 +11,7 @@ import Firebase
 import GoogleSignIn
 import FBSDKCoreKit
 import FirebaseFirestore
+import FirebaseAuth
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
@@ -73,6 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                         currentController = presentedController
                     }
                     currentController.present(controller, animated: true, completion: nil)
+                    GIDSignIn.sharedInstance().signOut()
                 }
             }
         }

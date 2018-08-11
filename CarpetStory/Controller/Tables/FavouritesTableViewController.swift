@@ -1,8 +1,8 @@
 //
-//  CarpetTableViewController.swift
+//  FavouritesTableViewController.swift
 //  CarpetStory
 //
-//  Created by Aashrit Garg on 04/08/2018.
+//  Created by Aashrit Garg on 11/08/2018.
 //  Copyright © 2018 Aashrit Garg. All rights reserved.
 //
 
@@ -13,7 +13,7 @@ import Alamofire
 import AlamofireImage
 import SVProgressHUD
 
-class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FavouritesTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var carpetTableView: UITableView!
     
@@ -22,6 +22,7 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
     var query : Query!
     var index : Int?
     var docID : String?
+    var documents : [String]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,30 +33,10 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
         carpetTableView.dataSource = self
         carpetTableView.rowHeight = 243
         
-        query.addSnapshotListener { documentSnapshot, error in
-            guard let documents = documentSnapshot?.documents else {
-                print("Error fetching document changes: \(error!)")
-                return
-            }
-            
-            if documents.count != 0 {
-                
-                for i in 0 ..< documents.count {
-                    let documentID = documents[i].documentID
-                    self.getCarpetFromDoc(documentID: documentID)
-                }
-                
-            } else {
-                
-                let alert = UIAlertController(title: "No carpets!", message: "Coudn't find carpets for mentioned size.", preferredStyle: .alert)
-                let action = UIAlertAction(title: "Go Back", style: .default) { (action) in
-                    _ = self.navigationController?.popViewController(animated: true)
-                }
-                
-                alert.addAction(action)
-                self.present(alert, animated: true, completion: nil)
-            }
+        for i in 0 ..< documents!.count {
+            self.getCarpetFromDoc(documentID: documents![i])
         }
+        
     }
     
     //MARK:- Get Document & Make Carpet Array

@@ -67,6 +67,8 @@ class WelcomeViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginBu
                     }
                     
                     print("Successfully logged into Firebase with Facebook", user?.user.email)
+                    let loginManager = FBSDKLoginManager()
+                    loginManager.logOut()
                     self.performSegue(withIdentifier: "goToMainTabBar", sender: self)
                 }
             }

@@ -43,31 +43,47 @@ class SearchViewController: UIViewController {
     
     @IBAction func lengthSearchButtonPressed(_ sender: UIButton) {
         
-        if Double(lengthTextField.text ?? "0")! > 0 {
+        if lengthTextField.text != "" {
             
             let double = Double(lengthTextField.text!)
             let doubleStr = String(format: "%.0f", double!)
             condition = Int(doubleStr)
             field = "length"
+            
+            lengthTextField.endEditing(true)
+            
+            performSegue(withIdentifier: "goToCarpetTable", sender: self)
+        } else {
+            let alert = UIAlertController(title: "Empty!", message: "Enter the size you want to search.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Retry?", style: .default) { (action) in
+                self.lengthTextField.text = ""
+            }
+            
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
         }
-        
-        lengthTextField.endEditing(true)
-        
-        performSegue(withIdentifier: "goToCarpetTable", sender: self)
     }
     
     @IBAction func breadthSearchButtonPressed(_ sender: UIButton) {
-        if Double(breadthTextField.text ?? "0")! > 0 {
+        if breadthTextField.text != "" {
             
             let double = Double(breadthTextField.text!)
             let doubleStr = String(format: "%.0f", double!)
             condition = Int(doubleStr)
             field = "breadth"
+            
+            breadthTextField.endEditing(true)
+            
+            performSegue(withIdentifier: "goToCarpetTable", sender: self)
+        } else {
+            let alert = UIAlertController(title: "Empty!", message: "Enter the size you want to search.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Retry?", style: .default) { (action) in
+                self.lengthTextField.text = ""
+            }
+            
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
         }
-        
-        breadthTextField.endEditing(true)
-        
-        performSegue(withIdentifier: "goToCarpetTable", sender: self)
     }
     
     

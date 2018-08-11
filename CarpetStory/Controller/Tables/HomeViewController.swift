@@ -12,6 +12,8 @@ import Alamofire
 import AlamofireImage
 import SVProgressHUD
 import FirebaseFirestore
+import FirebaseAuth
+import FBSDKLoginKit
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -21,12 +23,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var carpets = [Carpet]()
     let db = Firestore.firestore()
     var index : Int?
-    var docID : String?
+    var docID = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         SVProgressHUD.dismiss()
+        SVProgressHUD.show()
 
         carpetTableView.delegate = self
         carpetTableView.dataSource = self
@@ -50,7 +53,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let docRef = db.collection("Carpets").document(documentID)
         
-        SVProgressHUD.show()
         docRef.getDocument { (document, error) in
             
             if let document = document, document.exists {
@@ -66,24 +68,24 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     category: dataDescription!["category"] as? String ?? "",
                     mostViewed: true)
                 self.carpets.append(carpet)
-                self.docID = documentID
+                self.docID.append(documentID)
                 
                 self.carpetTableView.reloadData()
                 
             } else {
                 print("Document does not exist")
             }
-            
-            SVProgressHUD.dismiss()
         }
     }
 
     //MARK:- Logout Method
     
     @IBAction func logoutPressed(_ sender: UIBarButtonItem) {
+        
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
+            SVProgressHUD.dismiss()
             self.dismiss(animated: true, completion: nil)
             print("Successfully Loged Out")
         } catch let signOutError as NSError {
@@ -104,7 +106,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if carpets.count != 0 {
             let carpet : Carpet = carpets[indexPath.row]
             cell.carpetName.text = carpet.name
-            SVProgressHUD.show()
+            
             Alamofire.request(carpet.imageURL!).responseImage { response in
                 debugPrint(response)
                 
@@ -128,7 +130,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! CarpetViewController
         destinationVC.carpet = carpets[index!]
-        destinationVC.docID = docID!
+        destinationVC.docID = docID[index!]
     }
 
     

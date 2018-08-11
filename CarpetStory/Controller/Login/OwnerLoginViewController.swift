@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import SVProgressHUD
+import FirebaseAuth
 
 class OwnerLoginViewController: UIViewController {
 
@@ -35,7 +36,15 @@ class OwnerLoginViewController: UIViewController {
             
             if error != nil {
                 
-                print(error)
+                SVProgressHUD.dismiss()
+                let alert = UIAlertController(title: "Error", message: "Some problem with sign in!", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Try again?", style: .default) { (action) in
+                    self.passwordTextField.text = ""
+                    self.emailTextField.text = ""
+                }
+                
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
                 
             } else {
                 
