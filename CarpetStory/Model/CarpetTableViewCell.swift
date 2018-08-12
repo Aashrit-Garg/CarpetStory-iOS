@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SwipeCellKit
 
-class CarpetTableViewCell: UITableViewCell {
+class CarpetTableViewCell: SwipeTableViewCell {
 
     
     @IBOutlet weak var carpetImage: UIImageView!

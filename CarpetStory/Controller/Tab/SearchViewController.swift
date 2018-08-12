@@ -43,10 +43,9 @@ class SearchViewController: UIViewController {
     
     @IBAction func lengthSearchButtonPressed(_ sender: UIButton) {
         
-        if lengthTextField.text != "" {
+        if let double = Double(lengthTextField.text!) {
             
-            let double = Double(lengthTextField.text!)
-            let doubleStr = String(format: "%.0f", double!)
+            let doubleStr = String(format: "%.0f", double)
             condition = Int(doubleStr)
             field = "length"
             
@@ -54,7 +53,7 @@ class SearchViewController: UIViewController {
             
             performSegue(withIdentifier: "goToCarpetTable", sender: self)
         } else {
-            let alert = UIAlertController(title: "Empty!", message: "Enter the size you want to search.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error!", message: "Size is either not entered or is invalid.", preferredStyle: .alert)
             let action = UIAlertAction(title: "Retry?", style: .default) { (action) in
                 self.lengthTextField.text = ""
             }
@@ -65,10 +64,10 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func breadthSearchButtonPressed(_ sender: UIButton) {
-        if breadthTextField.text != "" {
+        
+        if let double = Double(breadthTextField.text!) {
             
-            let double = Double(breadthTextField.text!)
-            let doubleStr = String(format: "%.0f", double!)
+            let doubleStr = String(format: "%.0f", double)
             condition = Int(doubleStr)
             field = "breadth"
             
@@ -76,7 +75,7 @@ class SearchViewController: UIViewController {
             
             performSegue(withIdentifier: "goToCarpetTable", sender: self)
         } else {
-            let alert = UIAlertController(title: "Empty!", message: "Enter the size you want to search.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error!", message: "Size is either not entered or is invalid.", preferredStyle: .alert)
             let action = UIAlertAction(title: "Retry?", style: .default) { (action) in
                 self.lengthTextField.text = ""
             }
