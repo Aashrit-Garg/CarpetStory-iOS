@@ -9,12 +9,18 @@
 import UIKit
 import SceneKit
 import ARKit
+import Alamofire
+import SVProgressHUD
 
 class ARViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
+    
     var path : String?
     
+    var textureURL : String?
+    var length : Float?
+    var breadth : Float?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +64,9 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             if let hitResult = results.first {
                 
                 // Create a new scene
+                
+                SVProgressHUD.show()
+                
                 let carpetScene = SCNScene(named: "art.scnassets/PersianCarpet.scn")!
                 
                 if let carpetNode = carpetScene.rootNode.childNode(withName: "PersianCarpet", recursively: true) {
@@ -68,7 +77,21 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
                         z: hitResult.worldTransform.columns.3.z
                     )
                     
-                    sceneView.scene.rootNode.addChildNode(carpetNode)
+                    carpetNode.scale = SCNVector3(x: length!, y: breadth!, z: 0.01)
+                    
+                    Alamofire.request(textureURL!).responseImage { response in
+                        debugPrint(response)
+                        
+                        if let image = response.result.value {
+                            let material = SCNMaterial()
+                            material.isDoubleSided = false
+                            material.diffuse.contents = image
+                            carpetNode.geometry?.materials = [material]
+                            self.sceneView.scene.rootNode.addChildNode(carpetNode)
+                            SVProgressHUD.dismiss()
+                        }
+                        
+                    }
                     
                 }
                 

@@ -71,4 +71,16 @@ class CarpetViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func showCarpet(_ sender: UIButton) {
+        performSegue(withIdentifier: "goToAR", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! ARViewController
+        destinationVC.textureURL = carpet!.modelURL
+        destinationVC.length = Float(carpet!.length!) / 6299
+        destinationVC.breadth = Float(carpet!.breadth!) / 6299
+    }
+    
 }
