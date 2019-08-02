@@ -17,11 +17,15 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
 
     @IBOutlet weak var carpetTableView: UITableView!
     
+    // MARK: - Global Variable Initialised
+    
+    // One array created to store carpets for tableview. 
     var carpets = [Carpet]()
     let db = Firestore.firestore()
     var query : Query!
     var index : Int?
     var docID : String?
+    let imageCache = NSCache<NSString, UIImage>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +34,7 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
         
         carpetTableView.delegate = self
         carpetTableView.dataSource = self
-        carpetTableView.rowHeight = 243
+        carpetTableView.rowHeight = 250
         
         query.addSnapshotListener { documentSnapshot, error in
             guard let documents = documentSnapshot?.documents else {
@@ -42,7 +46,6 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
                 
                 for i in 0 ..< documents.count {
                     let documentID = documents[i].documentID
-                    print(documentID)
                     self.getCarpetFromDoc(documentID: documentID)
                 }
                 
@@ -75,7 +78,6 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
                     name: dataDescription!["name"] as? String ?? "",
                     breadth: dataDescription!["breadth"] as? Int ?? 1,
                     length: dataDescription!["length"] as? Int ?? 1,
-                    imageURL: dataDescription!["imageURL"] as? String ?? "",
                     modelURL: dataDescription!["modelURL"] as? String ?? "",
                     description: dataDescription!["description"] as? String ?? "",
                     category: dataDescription!["category"] as? String ?? "",
@@ -106,13 +108,18 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
         if carpets.count != 0 {
             let carpet : Carpet = carpets[indexPath.row]
             cell.carpetName.text = carpet.name
-            SVProgressHUD.show()
-            Alamofire.request(carpet.imageURL!).responseImage { response in
-                debugPrint(response)
+            if let cachedImage = imageCache.object(forKey: NSString(string: (carpet.modelURL!))) {
                 
-                if let image = response.result.value {
-                    cell.carpetImage.image = image
-                    SVProgressHUD.dismiss()
+                cell.carpetImage.image = cachedImage
+            } else {
+                
+                Alamofire.request(carpet.modelURL!).responseImage { response in
+                    debugPrint(response)
+                    if let image = response.result.value {
+                        self.imageCache.setObject(image, forKey: NSString(string: (carpet.modelURL!)))
+                        cell.carpetImage.image = image
+                        SVProgressHUD.dismiss()
+                    }
                 }
             }
         }

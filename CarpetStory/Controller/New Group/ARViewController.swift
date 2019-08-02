@@ -58,13 +58,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         if let touch = touches.first {
             
             let touchLocation = touch.location(in: sceneView)
-            
             let results = sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent)
             
             if let hitResult = results.first {
                 
                 // Create a new scene
-                
                 SVProgressHUD.show()
                 
                 let carpetScene = SCNScene(named: "art.scnassets/PersianCarpet.scn")!
@@ -90,15 +88,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
                             self.sceneView.scene.rootNode.addChildNode(carpetNode)
                             SVProgressHUD.dismiss()
                         }
-                        
                     }
-                    
                 }
-                
             }
-            
         }
-        
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {

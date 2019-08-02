@@ -19,61 +19,70 @@ class FavouritesTableViewController: UITableViewController {
 
     @IBOutlet weak var carpetTableView: UITableView!
     
+    // MARK: - Global Variable Initialised
+    
+    // Two arrays to 1. store carpets for tableview. 2. store document IDs of carpetsto be sent to next view.
     var carpets = [Carpet]()
-    let db = Firestore.firestore()
-    var query : Query!
-    var index : Int?
     var docID = [String]()
-    var isDeleted = false
+    
+    let db = Firestore.firestore()
+    
+    // Used to identify which carpet has been selected by user to be sent to the next view.
+    var index : Int?
+    
+    let imageCache = NSCache<NSString, UIImage>()
+    
+    // MARK: - View Update on Startup
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         SVProgressHUD.dismiss()
         
-        carpetTableView.rowHeight = 243
+        carpetTableView.rowHeight = 250
         
         updateTableView()
     }
     
+    // MARK: - Functions that are responsible for getting the list of SAVED carpets to be displayed.
+    
+    // MARK: Fetch carpet list of the saved carpets by the current user.
+    
     func updateTableView() {
         
-        docID = [String]()
-        carpets = [Carpet]()
+        self.docID = [String]()
+        self.carpets = [Carpet]()
         
-        let query = db.collection("Carpets").whereField("mostViewed", isEqualTo: true)
+        // Search is performed on the basis of current user's UID
         
-        query.addSnapshotListener { documentSnapshot, error in
+        db.collection("Favourites").document(Auth.auth().currentUser!.uid).collection("Carpets").whereField("wanted", isEqualTo: true).addSnapshotListener { documentSnapshot, error in
             guard let documents = documentSnapshot?.documents else {
                 print("Error fetching document changes: \(error!)")
                 return
             }
             
             for i in 0 ..< documents.count {
+                
                 let documentID = documents[i].documentID
-                let query1 = self.db.collection("Carpets").document(documentID).collection("Favourites").whereField("wanted", isEqualTo: true)
-                query1.addSnapshotListener { documentSnapshot, error in
-                    guard let documents = documentSnapshot?.documents else {
-                        print("Error fetching document changes: \(error!)")
-                        return
-                    }
+                var addCarpet = true
+                
+                // Search is necessary to avoid duplication.
+                
+                for j in 0 ..< self.docID.count {
                     
-                    if documents.count != 0 {
-                        
-                        for i in 0 ..< documents.count {
-                            
-                            let documentID1 = documents[i].documentID
-                            if documentID1 == Auth.auth().currentUser!.uid {
-                                self.getCarpetFromDoc(documentID: documentID)
-                            }
-                        }
+                    if documentID == self.docID[j] {
+                        addCarpet = false
                     }
+                }
+                
+                if addCarpet == true {
+                    self.getCarpetFromDoc(documentID: documentID)
                 }
             }
         }
     }
     
-    //MARK:- Get Document & Make Carpet Array
+    //MARK: Get Document & Make Carpet Array
     
     func getCarpetFromDoc(documentID : String) {
         
@@ -85,15 +94,17 @@ class FavouritesTableViewController: UITableViewController {
             if let document = document, document.exists {
                 let dataDescription = document.data()
                 
+                // Carpet object updated to be stored in the array.
+                
                 let carpet : Carpet = Carpet(
                     name: dataDescription!["name"] as? String ?? "",
                     breadth: dataDescription!["breadth"] as? Int ?? 1,
                     length: dataDescription!["length"] as? Int ?? 1,
-                    imageURL: dataDescription!["imageURL"] as? String ?? "",
                     modelURL: dataDescription!["modelURL"] as? String ?? "",
                     description: dataDescription!["description"] as? String ?? "",
                     category: dataDescription!["category"] as? String ?? "",
                     mostViewed: true)
+                
                 self.carpets.append(carpet)
                 self.docID.append(documentID)
                 
@@ -122,12 +133,18 @@ class FavouritesTableViewController: UITableViewController {
             let carpet : Carpet = carpets[indexPath.row]
             cell.carpetName.text = carpet.name
             SVProgressHUD.show()
-            Alamofire.request(carpet.imageURL!).responseImage { response in
-                debugPrint(response)
+            if let cachedImage = imageCache.object(forKey: NSString(string: (carpet.modelURL!))) {
                 
-                if let image = response.result.value {
-                    cell.carpetImage.image = image
-                    SVProgressHUD.dismiss()
+                cell.carpetImage.image = cachedImage
+            } else {
+                
+                Alamofire.request(carpet.modelURL!).responseImage { response in
+                    debugPrint(response)
+                    if let image = response.result.value {
+                        self.imageCache.setObject(image, forKey: NSString(string: (carpet.modelURL!)))
+                        cell.carpetImage.image = image
+                        SVProgressHUD.dismiss()
+                    }
                 }
             }
         }
@@ -143,6 +160,8 @@ class FavouritesTableViewController: UITableViewController {
         performSegue(withIdentifier: "goToCarpetDetail", sender: self)
     }
     
+    // MARK: - The information sent to next view according to user selection.
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! CarpetViewController
         destinationVC.carpet = carpets[index!]
@@ -150,48 +169,41 @@ class FavouritesTableViewController: UITableViewController {
     }
 }
 
+//MARK: - Swipe Cell Delegate Methads
+
 extension FavouritesTableViewController : SwipeTableViewCellDelegate {
-    
-    //MARK: - Swipe Cell Delegate Methads
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         
         guard orientation == .right else { return nil }
         
-        
-        
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
             
-            print("y")
             self.updateModel(at: indexPath)
-            self.isDeleted = true
         }
         
-        // customize the action appearance
+        // Cstomize the action appearance
         deleteAction.image = UIImage(named: "delete-icon")
         
         return [deleteAction]
     }
     
+    // MARK: Function called to delete the cell from the table and database.
+    
     func updateModel(at indexPath : IndexPath) {
-        
-        if !isDeleted {
-            db.collection("Carpets").document(docID[indexPath.row]).collection("Favourites").document(Auth.auth().currentUser!.uid).delete() { err in
-                if let err = err {
-                    print("Error removing document: \(err)")
+    db.collection("Favourites").document(Auth.auth().currentUser!.uid).collection("Carpets").document(docID[indexPath.row]).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                
+                if self.carpets.count == 1 {
+                    self.carpets = [Carpet]()
+                    self.docID = [String]()
+                    self.tableView.reloadData()
                 } else {
-                    print("Document successfully removed!")
-                    if self.carpets.count == 1 {
-                        self.carpets = [Carpet]()
-                        self.docID = [String]()
-                        self.tableView.reloadData()
-                        self.isDeleted = false
-                    } else {
-                        self.carpets.remove(at: indexPath.row)
-                        self.docID.remove(at: indexPath.row)
-                        self.tableView.reloadData()
-                        self.isDeleted = false
-                    }
+                    self.carpets.remove(at: indexPath.row)
+                    self.docID.remove(at: indexPath.row)
+                    self.tableView.reloadData()
                 }
             }
         }

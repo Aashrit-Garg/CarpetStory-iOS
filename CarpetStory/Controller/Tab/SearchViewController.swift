@@ -15,6 +15,8 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var lengthTextField: UITextField!
     @IBOutlet weak var breadthTextField: UITextField!
     @IBOutlet weak var tapView: UIView!
+    @IBOutlet weak var searchLengthButton: UIButton!
+    @IBOutlet weak var searchBreadthButton: UIButton!
     
     let db = Firestore.firestore()
     var condition : Int?
@@ -23,6 +25,8 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchLengthButton.layer.cornerRadius = 10
+        searchBreadthButton.layer.cornerRadius = 10
         SVProgressHUD.dismiss()
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapViewTapped))
@@ -74,6 +78,7 @@ class SearchViewController: UIViewController {
             breadthTextField.endEditing(true)
             
             performSegue(withIdentifier: "goToCarpetTable", sender: self)
+            
         } else {
             let alert = UIAlertController(title: "Error!", message: "Size is either not entered or is invalid.", preferredStyle: .alert)
             let action = UIAlertAction(title: "Retry?", style: .default) { (action) in

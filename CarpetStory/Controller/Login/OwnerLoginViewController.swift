@@ -33,24 +33,24 @@ class OwnerLoginViewController: UIViewController {
         
         //TODO: Log in the user
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
-            
+
             if error != nil {
-                
+
                 SVProgressHUD.dismiss()
                 let alert = UIAlertController(title: "Error", message: "Some problem with sign in!", preferredStyle: .alert)
                 let action = UIAlertAction(title: "Try again?", style: .default) { (action) in
                     self.passwordTextField.text = ""
                     self.emailTextField.text = ""
                 }
-                
+
                 alert.addAction(action)
                 self.present(alert, animated: true, completion: nil)
-                
+
             } else {
-                
+
                 SVProgressHUD.dismiss()
                 self.performSegue(withIdentifier: "goToAddCarpet", sender: self)
-                
+
             }
         }
     }
