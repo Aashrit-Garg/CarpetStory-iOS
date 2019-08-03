@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,12 +13,12 @@
 		04566159210355A300D0FBF8 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 04566158210355A300D0FBF8 /* art.scnassets */; };
 		0456615B210355A300D0FBF8 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456615A210355A300D0FBF8 /* ARViewController.swift */; };
 		0456615E210355A300D0FBF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0456615C210355A300D0FBF8 /* Main.storyboard */; };
-		04566160210355A800D0FBF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0456615F210355A800D0FBF8 /* Assets.xcassets */; };
 		04566163210355A800D0FBF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04566161210355A800D0FBF8 /* LaunchScreen.storyboard */; };
 		0456616E21035C0100D0FBF8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0456616D21035C0100D0FBF8 /* GoogleService-Info.plist */; };
 		0456617021035E9D00D0FBF8 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456616F21035E9D00D0FBF8 /* WelcomeViewController.swift */; };
 		0456617621044F1000D0FBF8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0456617521044F1000D0FBF8 /* HomeViewController.swift */; };
 		0486A83E211F45980072C886 /* FavouritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486A83D211F45980072C886 /* FavouritesTableViewController.swift */; };
+		04AD45DE22F4D2C3008781F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04AD45DD22F4D2C3008781F0 /* Assets.xcassets */; };
 		04B38EF7211217C6003C4F71 /* OwnerLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B38EF6211217C6003C4F71 /* OwnerLoginViewController.swift */; };
 		04B38EFB2112FC7D003C4F71 /* CarpetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B38EFA2112FC7D003C4F71 /* CarpetTableViewCell.swift */; };
 		04B38F012115912A003C4F71 /* CarpetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B38F002115912A003C4F71 /* CarpetTableViewController.swift */; };
@@ -38,13 +38,13 @@
 		04566158210355A300D0FBF8 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		0456615A210355A300D0FBF8 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARViewController.swift; path = "../New Group/ARViewController.swift"; sourceTree = "<group>"; };
 		0456615D210355A300D0FBF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0456615F210355A800D0FBF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04566162210355A800D0FBF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04566164210355A800D0FBF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0456616D21035C0100D0FBF8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0456616F21035E9D00D0FBF8 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		0456617521044F1000D0FBF8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0486A83D211F45980072C886 /* FavouritesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTableViewController.swift; sourceTree = "<group>"; };
+		04AD45DD22F4D2C3008781F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../.Trash/Assets.xcassets; sourceTree = "<group>"; };
 		04B38EF6211217C6003C4F71 /* OwnerLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerLoginViewController.swift; sourceTree = "<group>"; };
 		04B38EFA2112FC7D003C4F71 /* CarpetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarpetTableViewCell.swift; sourceTree = "<group>"; };
 		04B38F002115912A003C4F71 /* CarpetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarpetTableViewController.swift; sourceTree = "<group>"; };
@@ -98,8 +98,8 @@
 				0456616B210355F100D0FBF8 /* Controller */,
 				0456616A210355DC00D0FBF8 /* View */,
 				0456617721046DA800D0FBF8 /* Misc. */,
+				04AD45DD22F4D2C3008781F0 /* Assets.xcassets */,
 				04566158210355A300D0FBF8 /* art.scnassets */,
-				0456615F210355A800D0FBF8 /* Assets.xcassets */,
 				04566164210355A800D0FBF8 /* Info.plist */,
 				0456616D21035C0100D0FBF8 /* GoogleService-Info.plist */,
 			);
@@ -268,8 +268,8 @@
 				04566159210355A300D0FBF8 /* art.scnassets in Resources */,
 				04566163210355A800D0FBF8 /* LaunchScreen.storyboard in Resources */,
 				0456616E21035C0100D0FBF8 /* GoogleService-Info.plist in Resources */,
-				04566160210355A800D0FBF8 /* Assets.xcassets in Resources */,
 				0456615E210355A300D0FBF8 /* Main.storyboard in Resources */,
+				04AD45DE22F4D2C3008781F0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

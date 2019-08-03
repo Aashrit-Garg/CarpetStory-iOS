@@ -16,17 +16,16 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var breadthTextField: UITextField!
     @IBOutlet weak var tapView: UIView!
     @IBOutlet weak var searchLengthButton: UIButton!
-    @IBOutlet weak var searchBreadthButton: UIButton!
     
     let db = Firestore.firestore()
-    var condition : Int?
+    var conditionLength : Int?
+    var conditionBreadth : Int?
     var field : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         searchLengthButton.layer.cornerRadius = 10
-        searchBreadthButton.layer.cornerRadius = 10
         SVProgressHUD.dismiss()
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapViewTapped))
@@ -47,56 +46,34 @@ class SearchViewController: UIViewController {
     
     @IBAction func lengthSearchButtonPressed(_ sender: UIButton) {
         
-        if let double = Double(lengthTextField.text!) {
+        if let doubleLength = Double(lengthTextField.text!), let doubleBreadth = Double(breadthTextField.text!) {
             
-            let doubleStr = String(format: "%.0f", double)
-            condition = Int(doubleStr)
-            field = "length"
+            let doubleStrL = String(format: "%.0f", doubleLength)
+             let doubleStrB = String(format: "%.0f", doubleBreadth)
+            conditionLength = Int(doubleStrL)
+            conditionBreadth = Int(doubleStrB)
             
             lengthTextField.endEditing(true)
-            
-            performSegue(withIdentifier: "goToCarpetTable", sender: self)
-        } else {
-            let alert = UIAlertController(title: "Error!", message: "Size is either not entered or is invalid.", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Retry?", style: .default) { (action) in
-                self.lengthTextField.text = ""
-            }
-            
-            alert.addAction(action)
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    @IBAction func breadthSearchButtonPressed(_ sender: UIButton) {
-        
-        if let double = Double(breadthTextField.text!) {
-            
-            let doubleStr = String(format: "%.0f", double)
-            condition = Int(doubleStr)
-            field = "breadth"
-            
             breadthTextField.endEditing(true)
             
             performSegue(withIdentifier: "goToCarpetTable", sender: self)
-            
         } else {
             let alert = UIAlertController(title: "Error!", message: "Size is either not entered or is invalid.", preferredStyle: .alert)
             let action = UIAlertAction(title: "Retry?", style: .default) { (action) in
                 self.lengthTextField.text = ""
+                self.breadthTextField.text = ""
             }
             
             alert.addAction(action)
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! CarpetTableViewController
         
-        destinationVC.query = db.collection("Carpets").whereField(field!, isLessThanOrEqualTo: condition!)
+        destinationVC.queryLength = db.collection("Carpets").whereField("length", isLessThanOrEqualTo: conditionLength!)
+        destinationVC.queryBreadth = db.collection("Carpets").whereField("breadth", isLessThanOrEqualTo: conditionBreadth!)
+        destinationVC.searchCalled = true
     }
-    
-    
-    
 }

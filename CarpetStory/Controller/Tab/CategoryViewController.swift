@@ -48,5 +48,4 @@ class CategoryViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         destinationVC.query = db.collection("Carpets").whereField("category", isEqualTo: condition!)
     }
-
 }

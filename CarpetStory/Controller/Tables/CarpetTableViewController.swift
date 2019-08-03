@@ -22,19 +22,40 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
     // One array created to store carpets for tableview. 
     var carpets = [Carpet]()
     let db = Firestore.firestore()
+    var queryLength : Query!
+    var queryBreadth : Query!
     var query : Query!
+    
+    var resultOfLength = [String]()
+    var resultOfBreadth = [String]()
+    
     var index : Int?
     var docID : String?
     let imageCache = NSCache<NSString, UIImage>()
+    var searchCalled : Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         SVProgressHUD.dismiss()
         
         carpetTableView.delegate = self
         carpetTableView.dataSource = self
         carpetTableView.rowHeight = 250
+        
+        if searchCalled == true {
+            
+            getDocsFromQuery(query: queryLength!, selection: 1)
+            getDocsFromQuery(query: queryBreadth!, selection: 2)
+            
+        } else {
+            
+            getDocsFromQuery(query: query, selection: 3)
+        }
+    }
+    
+    func getDocsFromQuery(query : Query, selection : Int) {
         
         query.addSnapshotListener { documentSnapshot, error in
             guard let documents = documentSnapshot?.documents else {
@@ -44,11 +65,31 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
             
             if documents.count != 0 {
                 
-                for i in 0 ..< documents.count {
-                    let documentID = documents[i].documentID
-                    self.getCarpetFromDoc(documentID: documentID)
+                if selection == 1 {
+                    
+                    for i in 0 ..< documents.count {
+
+                        self.resultOfLength.append(documents[i].documentID)
+                    }
+                } else if selection == 2 {
+                    
+                    for i in 0 ..< documents.count {
+
+                        print("Fab1234 \(documents[i].documentID)")
+
+                        if self.resultOfLength.contains(documents[i].documentID) {
+
+                            let documentID = documents[i].documentID
+                            self.getCarpetFromDoc(documentID: documentID)
+                        }
+                    }
+                } else if selection == 3 {
+                    
+                    for i in 0 ..< documents.count {
+                        let documentID = documents[i].documentID
+                        self.getCarpetFromDoc(documentID: documentID)
+                    }
                 }
-                
             } else {
                 
                 let alert = UIAlertController(title: "No carpets!", message: "Coudn't find carpets for mentioned size.", preferredStyle: .alert)
@@ -140,6 +181,4 @@ class CarpetTableViewController: UIViewController, UITableViewDelegate, UITableV
         destinationVC.carpet = carpets[index!]
         destinationVC.docID = docID!
     }
-    
-    
 }
